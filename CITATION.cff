@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you refer to this software in academic work, use this metadata and identify the commit used."
+title: RealGas Simulator
+type: software
+authors:
+  - family-names: Soor
+    given-names: Prem
+repository-code: "https://github.com/soorprem/RealGas-Simulator"
+url: "https://github.com/soorprem/RealGas-Simulator"
+abstract: "A Python and Streamlit application for pure-component PVT, enthalpy, entropy and fugacity calculations using the Peng–Robinson equation of state, with ideal-gas comparison and two-state property changes."
+keywords:
+  - chemical engineering
+  - thermodynamics
+  - Peng-Robinson
+  - cubic equation of state
+  - Streamlit
+

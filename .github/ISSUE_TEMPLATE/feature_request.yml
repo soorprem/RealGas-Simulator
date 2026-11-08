@@ -1,0 +1,24 @@
+name: Feature request
+description: Suggest a useful improvement to the simulator.
+title: "[Feature] "
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Engineering problem
+      description: What calculation or demonstration would this improvement help?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: Describe inputs, outputs and an example. Include equations or sources when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and limitations
+      description: Describe any existing workaround, assumptions or scope limits.
+

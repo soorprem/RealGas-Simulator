@@ -1,6 +1,43 @@
 # RealGas Simulator
 
-PVT Behaviour and Thermodynamic Property Prediction Using Cubic Equations of State.
+[![Scientific tests](https://github.com/soorprem/RealGas-Simulator/actions/workflows/tests.yml/badge.svg)](https://github.com/soorprem/RealGas-Simulator/actions/workflows/tests.yml)
+
+**PVT behaviour and thermodynamic property prediction using cubic equations of state.**
+
+An undergraduate Chemical Engineering project by **Prem Soor, IIT Delhi**. Calculate
+pure-component compressibility, molar volume, enthalpy, entropy and fugacity with
+the Peng–Robinson equation of state. Inspect every equation and intermediate result,
+compare ideal and real gases, and calculate property changes between two states.
+
+[Four-page report](report.pdf) · [Theory and derivation](THEORY.md) ·
+[Validation results](validation/summary.csv) · [Flowchart](flowchart.svg) ·
+[Submission guide](SUBMISSION_GUIDE.md)
+
+![RealGas Simulator dashboard with calculated properties](screenshots/dashboard.jpg)
+
+### Two-state process calculation
+
+![Two-state process results showing ideal and real-gas property changes](screenshots/process_calculation.jpg)
+
+### At a glance
+
+| Capability | Implementation |
+|---|---|
+| Equation of state | Pure-component Peng–Robinson with temperature-dependent attraction |
+| Properties | Z, molar volume, ideal/residual/total H and S, fugacity coefficient and fugacity |
+| Process analysis | Two-state changes with one component and a common reference state |
+| Components | Methane, nitrogen, carbon dioxide, propane, ethane and manual inputs |
+| Exploration | Ten interactive plots, root selection and ideal-gas comparisons |
+| Reproducibility | Modular Python source, sample data, tests and independent PR checks |
+
+**Verification:** the supplied records contain 41 passing tests, 80 independent
+scalar PR checks and a 350-state pressure reconstruction grid. The badge above
+shows the separate GitHub Actions status. These checks verify implementation;
+they do not establish experimental accuracy. See the limitations below.
+
+**Start here:** install the dependencies and run `streamlit run app.py` using the
+steps below. This repository contains the source and report; a GitHub repository
+URL itself does not run the Streamlit application.
 
 Complete Python/Streamlit project built from scratch with the pure-component Peng–Robinson EOS.
 
@@ -189,3 +226,13 @@ The supplied textbook is a reference and is not redistributed with the software.
 - Submission checklist and five-minute demonstration: SUBMISSION_GUIDE.md.
 - To personalize the report, edit student_details.json and run build_report.py.
   The script checks that the result remains exactly four pages.
+
+## Contributing and citation
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) before changing scientific calculations.
+Use the repository's issue forms for calculation defects or feature proposals.
+The [changelog](CHANGELOG.md) records delivered features and repository changes.
+
+Citation metadata is provided in [CITATION.cff](CITATION.cff). When referring to
+results, record the exact commit, component constants, inputs, units, root rule
+and reference state so that the calculation can be reproduced.
