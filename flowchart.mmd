@@ -1,0 +1,9 @@
+flowchart TD
+  A["Component and state inputs"] --> B["Validate and convert units"]
+  B --> C["PR parameters and cubic roots"]
+  C --> D["Stability and root selection"]
+  D --> E["EOS departures and fugacity"]
+  D --> F["Ideal Cp integrals"]
+  E --> G["Combine molar properties"]
+  F --> G
+  G --> H["Tables, plots, history and exports"]

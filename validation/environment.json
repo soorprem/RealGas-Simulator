@@ -1,0 +1,9 @@
+{
+  "Python": "3.12.14",
+  "CoolProp": "8.0.0",
+  "numpy": "2.3.5",
+  "states_grid": 350,
+  "reference_scalar_checks": 80,
+  "all_reference_checks_passed": true,
+  "note": "Independent implementation verification is not experimental validation. HEOS comparison uses built-in high-accuracy fluids and may use different critical constants."
+}

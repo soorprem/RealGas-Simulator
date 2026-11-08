@@ -1,0 +1,8 @@
+{
+  "component": "Methane",
+  "T_K": 400,
+  "P_bar": 50,
+  "T_ref_K": 298.15,
+  "P_ref_bar": 1,
+  "root_rule": "Stable"
+}
