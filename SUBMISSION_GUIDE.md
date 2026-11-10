@@ -1,5 +1,22 @@
 # Submitting RealGas Simulator
 
+## Public evaluation and submission files
+
+- Live application: https://realgas-simulator-pr-2026.serenepier2.chatgpt.site/
+- Easy-start ZIP: [RealGas_Ready_To_Run.zip](downloads/RealGas_Ready_To_Run.zip)
+- Technical report: [report.pdf](report.pdf)
+- Complete source: https://github.com/soorprem/RealGas-Simulator
+
+Include the public application link with your course submission. Attach the report
+and ZIP as required by the course. Evaluation through the live link requires no
+local installation. For local use, extract the ZIP completely and follow
+`START_HERE.txt`; opening the ZIP alone does not start the software.
+
+If the Windows launcher fails, read `setup_log.txt` in its extracted folder.
+The packaged report contains earlier interface screenshots; use the live website
+for the redesigned interface. Scientific equations and sample values are unchanged.
+
+
 ## Recommended submission
 
 Follow the course portal's prescribed file types and naming rules. The assignment

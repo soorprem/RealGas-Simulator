@@ -13,7 +13,9 @@ compare ideal and real gases, and calculate property changes between two states.
 [Validation results](validation/summary.csv) · [Flowchart](flowchart.svg) ·
 [Submission guide](SUBMISSION_GUIDE.md)
 
-![RealGas Simulator dashboard with calculated properties](screenshots/dashboard.jpg)
+*Earlier interface screenshot; open the public website above to view the redesigned dashboard.*
+
+![Earlier RealGas Simulator dashboard with calculated properties](screenshots/dashboard.jpg)
 
 ### Two-state process calculation
 
@@ -36,14 +38,46 @@ shows the separate GitHub Actions status. These checks verify implementation;
 they do not establish experimental accuracy. See the limitations below.
 
 **Start here:** install the dependencies and run `streamlit run app.py` using the
-steps below. This repository contains the source and report; a GitHub repository
-URL itself does not run the Streamlit application.
+steps below. Use the public website link below to evaluate the app immediately, or download
+the easy-start ZIP to run the source locally.
 
 Complete Python/Streamlit project built from scratch with the pure-component Peng–Robinson EOS.
 
-## Run the website
+## Open the public website
 
-Install Python 3.11 or 3.12. Extract the ZIP and open a terminal in `RealGas_Simulator`.
+**[Launch RealGas Simulator](https://realgas-simulator-pr-2026.serenepier2.chatgpt.site/)**
+
+Publicly accessible for evaluation and sharing; no local Python installation is
+needed. The first visit loads browser Python and scientific packages and can take
+up to two minutes. Keep an Internet connection during initial loading.
+
+## Download the easy-start project
+
+**[Download RealGas_Ready_To_Run.zip](downloads/RealGas_Ready_To_Run.zip)**
+
+Extract the whole ZIP into a **new folder**, then open `RealGas_Simple`:
+
+- **Use the hosted app:** open `OPEN_WEBSITE.html`, then click Open RealGas Simulator.
+- **Windows local app:** install Python 3.12 (recommended), then double-click
+  `START_WINDOWS.bat`. The launcher prepares an isolated environment and installs
+  dependencies on first use. Internet is required for this setup.
+- **Mac/Linux local app:** run `sh START_MAC_LINUX.command` from that folder.
+- Read `START_HERE.txt` for manual commands and troubleshooting.
+
+If local setup fails, the Windows terminal stays open and `setup_log.txt` records
+its error. Share that error when requesting help. Python 3.11/3.12 are the tested
+versions; the launcher also attempts newer Python installations. The batch file
+has not been executed on a Windows test machine.
+
+The redesigned dashboard retains all nine sections, ten analysis plots,
+calculation details, history and exports. Source modules below match the
+redesigned interface. The four-page report retains its earlier interface
+screenshots; its equations and numerical results still apply.
+
+## Run the website manually
+
+Install Python 3.11 or 3.12. Open a terminal in the cloned repository root, or in
+`RealGas_Simple` after extracting the easy-start ZIP.
 
 ```bash
 python -m venv .venv
@@ -123,6 +157,8 @@ is not a negative absolute entropy.
 | File | Responsibility |
 |---|---|
 | app.py | Streamlit UI, inputs, session history and downloads |
+| ui.py | Redesigned presentation, dashboard and working navigation shortcuts |
+| run.py | First-run environment setup, diagnostics and local launch |
 | component_data.py | Textbook presets and component structure |
 | eos_model.py | PR parameters, derivative, roots, stability and departures |
 | ideal_gas.py | Cp validation and analytic H/S integrals |

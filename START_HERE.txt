@@ -1,0 +1,62 @@
+REALGAS SIMULATOR — REDESIGNED WEBSITE / EASY START
+
+QUICKEST OPTION (NO INSTALLATION)
+Open OPEN_WEBSITE.html and click Open RealGas Simulator. Internet required.
+
+RUN LOCALLY ON YOUR COMPUTER
+1. Extract the ZIP completely. Do not run it inside the ZIP.
+2. Install Python 3.12 if needed (recommended; Python 3.11 is also tested).
+   Windows: select "Add Python to PATH" during installation.
+3. Open the extracted RealGas_Simple folder.
+
+WINDOWS
+Double-click START_WINDOWS.bat.
+
+MAC
+Open START_MAC_LINUX.command. If your computer blocks opening it,
+open Terminal in this folder and run:
+    sh START_MAC_LINUX.command
+
+LINUX
+Open a terminal in this folder and run:
+    sh START_MAC_LINUX.command
+
+The launcher creates a private .venv folder, installs the required
+packages on the first run, and starts the website in your browser.
+Internet is needed for first-time setup. Later runs reuse the environment.
+Keep the terminal window open while using the app. Ctrl+C stops it.
+
+IF THE BROWSER DOES NOT OPEN
+Visit http://localhost:8501, or use the URL printed in the terminal.
+
+MANUAL METHOD
+Open a terminal in this folder:
+    python -m pip install -r requirements.txt
+    python -m streamlit run app.py
+On Mac/Linux, use python3 if python is unavailable.
+
+PROJECT FILES
+app.py: website entry point
+ui.py: redesigned dashboard, navigation and presentation
+Other .py files: scientific calculations, plots and exports
+requirements.txt: dependencies
+report.pdf: four-page assignment report
+THEORY.md: equations and reference conventions
+sample_input.json / sample_output.csv: example calculation
+validation/summary.csv: recorded independent PR comparisons
+
+LIVE WEBSITE
+https://realgas-simulator-pr-2026.serenepier2.chatgpt.site
+
+The scientific application files are unchanged from the full project.
+This package omits developer tooling, GitHub files and browser-hosting
+build files to keep local setup simple. The full ZIP remains available.
+Python is required; this is not a standalone executable installer.
+
+
+WINDOWS SETUP TROUBLESHOOTING
+If setup fails, the window now remains open and the exact error is saved
+to setup_log.txt in this folder. Send that file or its error text for help.
+This launcher also detects installations accessible through py -3.
+Newer Python versions are attempted, though 3.11/3.12 are the tested versions.
+Extract this updated ZIP into a NEW folder to avoid an old broken environment.

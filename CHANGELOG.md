@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-11-10
+
+- Published the public evaluation link in the README and submission guide.
+- Synced the redesigned green-and-ivory interface and dashboard shortcuts.
+- Retained all scientific calculators, analysis plots, history and exports.
+- Added the easy-start ZIP, platform launchers and online shortcut.
+- Improved Windows Python detection, persistent error logging and failure visibility.
+- The Windows batch file remains unverified on a Windows machine.
+
+
 ## 2026-11-08
 
 ### Scientific application

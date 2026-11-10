@@ -1,6 +1,7 @@
 """Run from this directory with: streamlit run app.py"""
 from pathlib import Path
 import json
+from ui import apply_style,brand,page_header,state_bar,section,dashboard
 import pandas as pd
 import streamlit as st
 from component_data import COMPONENTS,Component
@@ -13,42 +14,39 @@ from downloads import download_button
 
 ROOT=Path(__file__).resolve().parent
 st.set_page_config(page_title='RealGas Simulator',page_icon='🧪',layout='wide',initial_sidebar_state='expanded')
-st.markdown('''<style>
-.block-container{padding-top:4rem;max-width:1450px} h1{letter-spacing:-.035em;color:#173047} h2,h3{color:#173047}
-[data-testid="stMetric"]{background:white;border:1px solid #dde6ee;border-top:3px solid #087f8c;border-radius:8px;padding:16px}
-[data-testid="stSidebar"]{border-right:1px solid #d7e2ea} .rg-kicker{font-size:12px;font-weight:700;letter-spacing:.16em;color:#087f8c;margin-bottom:8px}
-</style>''',unsafe_allow_html=True)
+apply_style()
 PAGES=['Dashboard','PVT Calculator','Enthalpy Calculator','Entropy Calculator','Fugacity Calculator','Ideal-gas comparison','Two-state process','Graphical Analysis','About the Project']
 with st.sidebar:
-    st.markdown('## RealGas Simulator')
-    st.caption('PURE COMPONENT · PENG–ROBINSON')
-    page=st.radio('Workspace',PAGES,label_visibility='collapsed',key='page')
-    st.divider()
-    name=st.selectbox('Component',list(COMPONENTS)+['Custom component'],key='component_choice')
-    base=COMPONENTS.get(name,COMPONENTS['Methane'])
-    with st.form('state_inputs'):
-        st.markdown('#### Common inputs')
+    brand()
+    labels=['Overview','PVT calculator','Enthalpy','Entropy','Fugacity','Ideal-gas comparison','Two-state process','Graphical analysis','About & validation']
+    page=st.radio('Workspace',PAGES,format_func=lambda p:labels[PAGES.index(p)],label_visibility='collapsed',key='page')
+    st.markdown('<div class="rg-navfoot"><b>Built for curious engineers.</b><br>Pure-component thermodynamics<br>Peng–Robinson equation of state<br><br>REALGAS SIMULATOR · IIT DELHI</div>',unsafe_allow_html=True)
+page_header(page)
+section('01  Define your state', 'CHOOSE A GAS → SET CONDITIONS → CALCULATE')
+name=st.selectbox('Component',list(COMPONENTS)+['Custom component'],key='component_choice')
+base=COMPONENTS.get(name,COMPONENTS['Methane'])
+with st.form('state_inputs'):
+    c1,c2,c3=st.columns(3)
+    T=c1.number_input('Temperature (K)',50.0,2500.0,400.0,10.0,format='%.4f')
+    P=c2.number_input('Pressure (bar)',0.000001,2000.0,50.0,1.0,format='%.6f')
+    phase=c3.selectbox('Root selection',['Stable','Vapour','Liquid'],help='Stable selects the lowest fugacity among mechanically stable roots.')
+    with st.expander('Component details · critical constants & heat capacity',expanded=name=='Custom component'):
         cname=st.text_input('Component name',value=base.name if name!='Custom component' else 'Custom gas',key=f'name_{name}')
-        c1,c2=st.columns(2)
-        T=c1.number_input('Temperature (K)',50.0,2500.0,400.0,10.0,format='%.4f')
-        P=c2.number_input('Pressure (bar)',0.000001,2000.0,50.0,1.0,format='%.6f')
-        phase=st.selectbox('Root selection',['Stable','Vapour','Liquid'])
-        with st.expander('Critical constants & Cp data',expanded=name=='Custom component'):
-            tc=st.number_input('Critical temperature (K)',min_value=0.1,value=float(base.tc),key=f'tc_{name}',format='%.5f')
-            pc=st.number_input('Critical pressure (bar)',min_value=0.000001,value=float(base.pc_bar),key=f'pc_{name}',format='%.6f')
-            om=st.number_input('Acentric factor',min_value=-0.5,max_value=0.5,value=float(base.omega),key=f'om_{name}',format='%.6f')
-            st.caption('Cp/R = A + B T + C T² + D/T². Enter unscaled coefficients; T in K.')
-            ca=st.number_input('Cp A (dimensionless)',value=float(base.cp_a),key=f'a_{name}',format='%.8g')
-            cb=st.number_input('Cp B (1/K)',value=float(base.cp_b),key=f'b_{name}',format='%.8g')
-            cc=st.number_input('Cp C (1/K²)',value=float(base.cp_c),key=f'c_{name}',format='%.8g')
-            cd=st.number_input('Cp D (K²)',value=float(base.cp_d),key=f'd_{name}',format='%.8g')
-            mn=st.number_input('Cp minimum T (K)',min_value=1.0,value=float(base.tmin),key=f'mn_{name}')
-            mx=st.number_input('Cp maximum T (K)',min_value=1.0,value=float(base.tmax),key=f'mx_{name}')
-        with st.expander('Reference state'):
-            tref=st.number_input('Reference temperature (K)',min_value=1.0,value=298.15,format='%.4f')
-            pref=st.number_input('Reference pressure (bar)',min_value=0.000001,value=1.0,format='%.6f')
-        submitted=st.form_submit_button('Calculate state',type='primary',width='stretch')
-    st.caption('Edit inputs, then calculate to update the displayed state. Tables and downloads use that same snapshot.')
+        tc=st.number_input('Critical temperature (K)',min_value=0.1,value=float(base.tc),key=f'tc_{name}',format='%.5f')
+        pc=st.number_input('Critical pressure (bar)',min_value=0.000001,value=float(base.pc_bar),key=f'pc_{name}',format='%.6f')
+        om=st.number_input('Acentric factor',min_value=-0.5,max_value=0.5,value=float(base.omega),key=f'om_{name}',format='%.6f')
+        st.caption('Cp/R = A + B T + C T² + D/T². Enter unscaled coefficients; T in K.')
+        ca=st.number_input('Cp A (dimensionless)',value=float(base.cp_a),key=f'a_{name}',format='%.8g')
+        cb=st.number_input('Cp B (1/K)',value=float(base.cp_b),key=f'b_{name}',format='%.8g')
+        cc=st.number_input('Cp C (1/K²)',value=float(base.cp_c),key=f'c_{name}',format='%.8g')
+        cd=st.number_input('Cp D (K²)',value=float(base.cp_d),key=f'd_{name}',format='%.8g')
+        mn=st.number_input('Cp minimum T (K)',min_value=1.0,value=float(base.tmin),key=f'mn_{name}')
+        mx=st.number_input('Cp maximum T (K)',min_value=1.0,value=float(base.tmax),key=f'mx_{name}')
+    with st.expander('Reference state'):
+        tref=st.number_input('Reference temperature (K)',min_value=1.0,value=298.15,format='%.4f')
+        pref=st.number_input('Reference pressure (bar)',min_value=0.000001,value=1.0,format='%.6f')
+    submitted=st.form_submit_button('Calculate state',type='primary',width='stretch')
+st.caption('Change your inputs, then press Calculate state. All results and downloads use your last successful calculation.')
 
 if 'history' not in st.session_state: st.session_state.history=[]
 if submitted or 'result' not in st.session_state:
@@ -64,11 +62,7 @@ if submitted or 'result' not in st.session_state:
         st.warning('Calculation failed. The previous successful state remains below.')
 s=st.session_state.result
 comp=Component(**s['component_data'])
-st.markdown('<div class="rg-kicker">CHEMICAL ENGINEERING / THERMODYNAMIC WORKSPACE</div>',unsafe_allow_html=True)
-st.title('RealGas Simulator')
-st.caption('PVT Behaviour and Thermodynamic Property Prediction Using Cubic Equations of State.')
-st.markdown(f"**{page}**  ·  {s['component']}  ·  {s['T_K']:g} K  ·  {s['P_bar']:g} bar  ·  {s['phase_rule']} root")
-st.caption(f"Data: {comp.source}. Heat-capacity range: {comp.tmin:g}–{comp.tmax:g} K. Displayed values correspond to the last successful calculation.")
+state_bar(s)
 
 def metrics():
     cols=st.columns(4)
@@ -85,16 +79,9 @@ def roots_table():
     for note in s['notes']: st.info(note)
 
 if page=='Dashboard':
+    section('02  Your calculated properties', 'VALUES WITH UNITS · FULL EQUATIONS BELOW')
     metrics()
-    st.subheader('One state. Four connected calculations.')
-    left,right=st.columns([1.1,1])
-    with left:
-        st.markdown('Calculate real-gas volume, enthalpy, entropy and fugacity using a shared Peng–Robinson state. Inspect the equations on each page, compare roots, then explore pressure and temperature sweeps.')
-        st.markdown('**Suggested demonstration:** methane at 400 K and 50 bar; then reduce pressure to 0.000001 bar to inspect the ideal-gas limit. Use propane at 300 K and 10 bar to demonstrate three roots.')
-        st.info('Hᶦᵍ(T₀) = 0 and Sᶦᵍ(T₀, P₀) = 0. H and S totals include state departures; they are relative to this ideal-gas datum, not absolute values. Real-gas totals need not vanish at T₀, P₀.')
-    with right:
-        data=[['EOS','Peng–Robinson, original alpha'],['Scope','Pure homogeneous fluid; no mixtures'],['Internal units','Pa, K, m³/mol, J/mol'],['Reference',f"{s['T_ref_K']:g} K / {s['P_ref_bar']:g} bar"],['Heat capacity',f'Cp/R polynomial, {comp.tmin:g}–{comp.tmax:g} K']]
-        st.dataframe(pd.DataFrame(data,columns=['Setting','Value']),hide_index=True,width='stretch')
+    dashboard(s,comp)
     if s['thermal_error']: st.warning(s['thermal_error'])
     elif s['H_kJ_mol'] is not None:
         a,b=st.columns(2);a.metric('Enthalpy (kJ/mol)',f"{s['H_kJ_mol']:.6g}");b.metric('Entropy (J/mol K)',f"{s['S_J_molK']:.6g}")
@@ -197,7 +184,7 @@ elif page=='About the Project':
     details(s)
 
 st.divider()
-st.subheader('Results & session history')
+st.subheader('Save your work')
 st.caption('History lasts for this browser session. Download records before closing it. SI units are included in CSV column names; H_kJ_mol is in kJ/mol.')
 with st.expander('Current result table'):
     st.dataframe(pd.DataFrame([flat_result(s)]),hide_index=True,width='stretch')
@@ -211,3 +198,5 @@ with st.expander(f"Calculation history ({len(st.session_state.history)} states)"
     download_button(st,'Download history CSV',history.to_csv(index=False).encode(),'realgas_history.csv','text/csv')
     if st.button('Clear history'):
         st.session_state.history=[];st.rerun()
+
+st.markdown('<div class="rg-footer"><span>RealGas Simulator · Chemical engineering workspace</span><span>Pure-component Peng–Robinson EOS</span></div>',unsafe_allow_html=True)
